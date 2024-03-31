@@ -4,13 +4,20 @@
     <title>Canvas Drawing</title>
     <style>
       canvas {
+        border-radius: 13px;
         border: 1px solid black;
       }
     </style>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <canvas id="canvas" width="800" height="600"></canvas>
-    <button class="reset">Очистить холст</button>
+    <div class="app">
+      <canvas id="canvas" width="800" height="600"></canvas>
+      <div class="timer">
+        <span class="second">00</span>:<span class="milsecond">00</span>
+      </div>
+      <button class="reset">Очистить холст</button>
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>

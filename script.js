@@ -1,6 +1,11 @@
 const canvas = document.getElementById("canvas");
 const resetBtn = document.querySelector(".reset");
+const timer = document.querySelector(".timer");
+const second = document.querySelector(".second");
+const milSecond = document.querySelector(".tmilSecond");
 const ctx = canvas.getContext("2d");
+
+let times = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
 let drawing = false;
 let lastTime = true;
 let isDraw = false;
@@ -26,10 +31,11 @@ canvas.addEventListener(
 
 function startDrawing(e) {
   drawing = true;
+  let time = randomTime(times);
   if (!isDraw) {
     setTimeout(() => {
       lastTime = false;
-    }, 3000);
+    }, time);
   }
   draw(e);
 }
@@ -59,6 +65,11 @@ function reset() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   lastTime = true;
   isDraw = false;
+}
+
+function randomTime(items) {
+  let item = items[Math.floor(Math.random() * items.length)];
+  return item;
 }
 
 resetBtn.addEventListener("click", reset);

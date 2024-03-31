@@ -1,3 +1,19 @@
 .pen {
   cursor: url(https://assets.codepen.io/210284/frank_32.svg), 2 2, none;
 }
+
+.app {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+}
+
+.timer {
+  padding: 5px 10px;
+  border-radius: 13px;
+  background-color: black;
+  color: white;
+  font-size: 56px;
+}
