@@ -10,54 +10,7 @@
   </head>
   <body>
     <canvas id="canvas" width="800" height="600"></canvas>
-
-    <script>
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
-      let drawing = false;
-
-      canvas.addEventListener("mousedown", startDrawing);
-      canvas.addEventListener("touchstart", startDrawing);
-      canvas.addEventListener("mousemove", draw);
-      canvas.addEventListener("mouseup", stopDrawing);
-      canvas.addEventListener("touchend", stopDrawing);
-      canvas.addEventListener("mouseout", stopDrawing);
-      canvas.addEventListener(
-        "touchmove",
-        function (e) {
-          var touch = e.touches[0];
-          var mouseEvent = new MouseEvent("mousemove", {
-            clientX: touch.clientX + 10,
-            clientY: touch.clientY + 10,
-          });
-          canvas.dispatchEvent(mouseEvent);
-        },
-        false
-      );
-
-      function startDrawing(e) {
-        drawing = true;
-        draw(e);
-      }
-
-      function draw(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!drawing) return;
-        ctx.lineWidth = 5;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = "black";
-
-        ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-      }
-
-      function stopDrawing() {
-        drawing = false;
-        ctx.beginPath();
-      }
-    </script>
+    <button class="reset">Очистить холст</button>
+    <script src="./script.js"></script>
   </body>
 </html>

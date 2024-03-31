@@ -1,58 +1,64 @@
-const canvas = document.getElementById("myCanvas");
-const reset = document.querySelector(".reset");
+const canvas = document.getElementById("canvas");
+const resetBtn = document.querySelector(".reset");
 const ctx = canvas.getContext("2d");
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
+let drawing = false;
+let lastTime = true;
+let isDraw = false;
 
-canvas.addEventListener("mousedown", (e) => {
-  isDrawing = true;
-  canvas.classList.add("pen");
-  [lastX, lastY] = [e.offsetX, e.offsetY];
-});
+canvas.addEventListener("mousedown", startDrawing);
+canvas.addEventListener("touchstart", startDrawing);
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mouseup", stopDrawing);
+canvas.addEventListener("touchend", stopDrawing);
+canvas.addEventListener("mouseout", stopDrawing);
+canvas.addEventListener(
+  "touchmove",
+  function (e) {
+    var touch = e.touches[0];
+    var mouseEvent = new MouseEvent("mousemove", {
+      clientX: touch.clientX + 10,
+      clientY: touch.clientY + 10,
+    });
+    canvas.dispatchEvent(mouseEvent);
+  },
+  false
+);
 
-canvas.addEventListener("mousemove", (e) => {
-  if (isDrawing) {
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+function startDrawing(e) {
+  drawing = true;
+  if (!isDraw) {
+    setTimeout(() => {
+      lastTime = false;
+    }, 3000);
   }
-});
+  draw(e);
+}
 
-canvas.addEventListener("mouseup", () => {
-  canvas.classList.remove("pen");
-
-  isDrawing = false;
-});
-canvas.addEventListener("touchstart", (e) => {
+function draw(e) {
   e.preventDefault();
-  isDrawing = true;
-  [lastX, lastY] = [e.clientX, e.clientY];
-});
+  e.stopPropagation();
+  if (!drawing) return;
+  if (!lastTime) return;
+  isDraw = true;
+  ctx.lineWidth = 5;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "black";
 
-canvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
+  ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+}
 
-  if (isDrawing) {
-    canvas.classList.add("pen");
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.clientX, e.clientY);
-    ctx.stroke();
-    [lastX, lastY] = [e.clientX, e.clientY];
-  }
-});
+function stopDrawing() {
+  drawing = false;
+  ctx.beginPath();
+}
 
-canvas.addEventListener("touchend", (e) => {
-  e.preventDefault();
-
-  canvas.classList.remove("pen");
-
-  isDrawing = false;
-});
-
-reset.addEventListener("click", () => {
+function reset() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-});
+  lastTime = true;
+  isDraw = false;
+}
+
+resetBtn.addEventListener("click", reset);
