@@ -5,10 +5,11 @@ const second = document.querySelector(".second");
 const milSecond = document.querySelector(".milsecond");
 const ctx = canvas.getContext("2d");
 
-let times = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000];
+let times = [500, 1000, 1500, 2000, 2500, 3000];
 let drawing = false;
 let lastTime = true;
 let isDraw = false;
+let timerInterval, timerset, time;
 
 canvas.addEventListener("mousedown", startDrawing);
 canvas.addEventListener("touchstart", startDrawing);
@@ -28,6 +29,15 @@ canvas.addEventListener(
   },
   false
 );
+
+time = randomTime(times);
+let endTime = Date.now() + time;
+let remainingTime = endTime - Date.now();
+let futseconds = Math.floor(remainingTime / 1000);
+let futmilliseconds = remainingTime % 1000;
+
+second.textContent = `0${futseconds}`;
+milSecond.textContent = futmilliseconds;
 
 function isInteger(num) {
   return (num ^ 0) === num;
@@ -54,10 +64,9 @@ function calc(sec, msec) {
 function startDrawing(e) {
   drawing = true;
 
-  let time = randomTime(times);
   if (!isDraw) {
     countdownTimer(time);
-    setTimeout(() => {
+    timerset = setTimeout(() => {
       lastTime = false;
     }, time);
   }
@@ -67,7 +76,7 @@ function startDrawing(e) {
 function countdownTimer(milliseconds) {
   let endTime = Date.now() + milliseconds;
 
-  let timerInterval = setInterval(() => {
+  timerInterval = setInterval(() => {
     let remainingTime = endTime - Date.now();
     if (remainingTime <= 0) {
       clearInterval(timerInterval);
@@ -104,9 +113,20 @@ function stopDrawing() {
 }
 
 function reset() {
+  time = randomTime(times);
+
+  let endTime = Date.now() + time;
+  let remainingTime = endTime - Date.now();
+  let futseconds = Math.floor(remainingTime / 1000);
+  let futmilliseconds = remainingTime % 1000;
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   lastTime = true;
   isDraw = false;
+  clearInterval(timerInterval);
+  clearTimeout(timerset);
+  second.textContent = `0${futseconds}`;
+  milSecond.textContent = futmilliseconds;
 }
 
 function randomTime(items) {
