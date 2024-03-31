@@ -19,10 +19,21 @@
       canvas.addEventListener("mousedown", startDrawing);
       canvas.addEventListener("touchstart", startDrawing);
       canvas.addEventListener("mousemove", draw);
-      canvas.addEventListener("touchmove", draw);
       canvas.addEventListener("mouseup", stopDrawing);
       canvas.addEventListener("touchend", stopDrawing);
       canvas.addEventListener("mouseout", stopDrawing);
+      canvas.addEventListener(
+        "touchmove",
+        function (e) {
+          var touch = e.touches[0];
+          var mouseEvent = new MouseEvent("mousemove", {
+            clientX: touch.clientX + 10,
+            clientY: touch.clientY + 10,
+          });
+          canvas.dispatchEvent(mouseEvent);
+        },
+        false
+      );
 
       function startDrawing(e) {
         drawing = true;
@@ -30,6 +41,8 @@
       }
 
       function draw(e) {
+        e.preventDefault();
+        e.stopPropagation();
         if (!drawing) return;
         ctx.lineWidth = 5;
         ctx.lineCap = "round";
