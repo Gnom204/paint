@@ -22,7 +22,7 @@ canvas {
 .app {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 70%;
   align-items: center;
   justify-content: center;
 }
@@ -54,11 +54,16 @@ button {
   button {
     padding: 10px;
   }
+  canvas {
+    width: 300px;
+  }
 }
 
 body {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: auto;
   align-items: center;
+  justify-content: center;
 }
