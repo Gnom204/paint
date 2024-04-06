@@ -115,7 +115,7 @@ function draw(e) {
 function moveAt(pageX, pageY) {
   pen.style.display = "flex";
   pen.style.left = pageX + 10 + "px";
-  pen.style.top = pageY - 40 + "px";
+  pen.style.top = pageY - 50 + "px";
 }
 
 function stopDrawing() {
