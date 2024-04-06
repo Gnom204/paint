@@ -34,3 +34,9 @@ button {
   background-color: aliceblue;
   border-radius: 13px;
 }
+@media screen and (max-width: 900px) {
+  .pen {
+    width: 96px;
+    height: 96px;
+  }
+}
