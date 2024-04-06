@@ -11,12 +11,20 @@
   pointer-events: none;
 }
 
+canvas {
+  border-radius: 13px;
+  border: 1px solid black;
+  position: relative;
+  max-width: 800px;
+  max-height: 800px;
+}
+
 .app {
-  margin: auto;
   display: flex;
   flex-direction: column;
   width: 50%;
   align-items: center;
+  justify-content: center;
 }
 
 .timer {
@@ -36,7 +44,21 @@ button {
 }
 @media screen and (max-width: 900px) {
   .pen {
-    width: 96px;
-    height: 96px;
+    width: 46px;
+    height: 46px;
   }
+  .timer {
+    padding: 5px 50px;
+    font-size: 56px;
+  }
+  button {
+    padding: 10px;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  align-items: center;
 }
