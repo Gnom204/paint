@@ -4,6 +4,7 @@ const timer = document.querySelector(".timer");
 const second = document.querySelector(".second");
 const milSecond = document.querySelector(".milsecond");
 const ctx = canvas.getContext("2d");
+const pen = document.querySelector(".pen");
 
 let times = [500, 1000, 1500, 2000, 2500, 3000];
 let drawing = false;
@@ -63,6 +64,9 @@ function calc(sec, msec) {
 
 function startDrawing(e) {
   drawing = true;
+  pen.ondragstart = function () {
+    return false;
+  };
 
   if (!isDraw) {
     countdownTimer(time);
@@ -100,11 +104,18 @@ function draw(e) {
   ctx.lineWidth = 5;
   ctx.lineCap = "round";
   ctx.strokeStyle = "black";
+  moveAt(e.clientX, e.clientY);
 
   ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
   ctx.stroke();
   ctx.beginPath();
   ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+}
+
+function moveAt(pageX, pageY) {
+  pen.style.display = "flex";
+  pen.style.left = pageX + 10 + "px";
+  pen.style.top = pageY - 40 + "px";
 }
 
 function stopDrawing() {

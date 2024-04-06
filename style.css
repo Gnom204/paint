@@ -1,5 +1,14 @@
 .pen {
-  cursor: url(https://assets.codepen.io/210284/frank_32.svg), 2 2, none;
+  position: absolute;
+  display: none;
+  background-image: url(./pen.svg);
+  width: 46px;
+  height: 46px;
+  background-size: contain;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  pointer-events: none;
 }
 
 .app {
